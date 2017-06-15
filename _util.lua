@@ -13,3 +13,9 @@ function string:split(delimiter)
   table.insert( result, string.sub( self, from  ) )
   return result
 end
+
+
+function test_binary_dataset(bin)
+  
+
+end

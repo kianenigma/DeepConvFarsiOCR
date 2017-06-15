@@ -72,7 +72,7 @@ function extract_labels(images_dir)
   local labels = torch.Tensor(#files)
 
   for i=1, #files do
-    labels[i] = files[i]:split('/')[3]:split("_")[1]
+    labels[i] = tonumber(files[i]:split('/')[3]:split("_")[1])
   end
 
   return labels
@@ -84,7 +84,8 @@ function extract_labels_main(images_dir)
   local labels = torch.Tensor(#files)
 
   for i=1, #files do
-    labels[i] = files[i]:split('/')[3]:split("_")[1]
+    local lbl = files[i]:split('/')[3]:split("_")[2]
+    labels[i] = tonumber(lbl:sub(1, -5)) + 1
   end
 
   return labels
@@ -97,7 +98,7 @@ function store_binary(images_dir, W, H, name)
   local classes = {}
 
   all.data = torch.Tensor(#files, 1, W, H)
-  all.label = extract_labels(images_dir)
+  all.label = extract_labels_main(images_dir)
 
   for i = 1, #files  do
     print('processing/saving data ' .. i .. '[' .. files[i] .. ']')
@@ -109,8 +110,9 @@ end
 
 
 function run()
-  local src_folder = './ModaresDatabase'
-  local dest_folder = './ModaresPNG'
+  local src_folder = './PDB-Train'
+  local dest_folder = './PDB-Train-PNG'
+  local binary_name = 'PDB_Train.bin'
 
   os.execute('mkdir ' .. dest_folder)
   local images_dirs
@@ -118,19 +120,19 @@ function run()
   local H = 30
 
   -- convert all images to png
-  images_dirs = dirLookup(src_folder)
-  for i=1, #images_dirs do
-    convert_to_png(images_dirs[i], dest_folder)
-  end
+  -- images_dirs = dirLookup(src_folder)
+  -- for i=1, #images_dirs do
+  --   convert_to_png(images_dirs[i], dest_folder)
+  -- end
 
 
   -- scale them all to 30x30
-  images_dirs = dirLookup(dest_folder)
-  for i=1, #images_dirs do
-    pad_image_to(images_dirs[i], W, H)
-  end
+  -- images_dirs = dirLookup(dest_folder)
+  -- for i=1, #images_dirs do
+  --   pad_image_to(images_dirs[i], W, H)
+  -- end
 
   -- store a binary version
-  store_binary(dest_folder, W, H, './modares_test.bin')
+  store_binary(dest_folder, W, H, binary_name)
 
 end
