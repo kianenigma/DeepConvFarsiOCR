@@ -3,5 +3,7 @@ data/*
 ModaresDatabase
 ModaresPNG
 PDB-Test
-PDB-Train1
-PDB-Train2
+PDB-Test-PNG
+PDB-Train
+PDB-Train-PNG
+*.bin
