@@ -23,7 +23,7 @@ A Deep Convolutional Approach Toward Farsi Character Recognition. Used for both 
 > Note that all files paths given to `--src` and `--dest` should be RELATIVE and should NOT include any `/` in them.
 
 #### Step2: Data Sourcing
-  This step converts the raw data stored in binary files to [`dp:DataSource`](https://github.com/nicholas-leonard/dp/blob/master/data/datasource.lua). This operation is done using `data.source.lua` and it is called internally by `cnn.v2.lua`. Hence, it cannot accepts parameters and should be manually adjusted. The following parameters are important:
+  This step converts the raw data stored in binary files to [`dp:DataSource`](https://github.com/nicholas-leonard/dp/blob/master/data/datasource.lua). This operation is done using `data.source.lua` and it is called internally by `cnn.v2.lua`. Hence, it cannot accepts parameters and should be manually adjusted. [The following parameters](https://github.com/Kianenigma/DeepConvFarsiOCR/blob/master/cnn.v2.data.source.lua#L51) are important:
   ```
   local validRatio = .5
   local train_bin = './PDB_Train.bin'
