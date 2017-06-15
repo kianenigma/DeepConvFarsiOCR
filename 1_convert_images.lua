@@ -110,9 +110,9 @@ end
 
 
 function run()
-  local src_folder = './PDB-Train'
-  local dest_folder = './PDB-Train-PNG'
-  local binary_name = 'PDB_Train.bin'
+  local src_folder = './PDB-Test'
+  local dest_folder = './PDB-Test-PNG'
+  local binary_name = 'PDB_Test.bin'
 
   os.execute('mkdir ' .. dest_folder)
   local images_dirs
@@ -120,17 +120,17 @@ function run()
   local H = 30
 
   -- convert all images to png
-  -- images_dirs = dirLookup(src_folder)
-  -- for i=1, #images_dirs do
-  --   convert_to_png(images_dirs[i], dest_folder)
-  -- end
+  images_dirs = dirLookup(src_folder)
+  for i=1, #images_dirs do
+    convert_to_png(images_dirs[i], dest_folder)
+  end
 
 
   -- scale them all to 30x30
-  -- images_dirs = dirLookup(dest_folder)
-  -- for i=1, #images_dirs do
-  --   pad_image_to(images_dirs[i], W, H)
-  -- end
+  images_dirs = dirLookup(dest_folder)
+  for i=1, #images_dirs do
+    pad_image_to(images_dirs[i], W, H)
+  end
 
   -- store a binary version
   store_binary(dest_folder, W, H, binary_name)
