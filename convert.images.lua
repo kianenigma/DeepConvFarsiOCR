@@ -84,7 +84,7 @@ function extract_labels_main(images_dir)
   local labels = torch.Tensor(#files)
 
   for i=1, #files do
-    local lbl = files[i]:split('/')[3]:split("_")[2]
+    local lbl = files[i]:split('/')[2]:split("_")[2]
     labels[i] = tonumber(lbl:sub(1, -5)) + 1
   end
 
@@ -109,11 +109,7 @@ function store_binary(images_dir, W, H, name)
 end
 
 
-function run()
-  local src_folder = './PDB-Test'
-  local dest_folder = './PDB-Test-PNG'
-  local binary_name = 'PDB_Test.bin'
-
+function run(src_folder, dest_folder, binary_name)
   os.execute('mkdir ' .. dest_folder)
   local images_dirs
   local W = 30
@@ -134,5 +130,18 @@ function run()
 
   -- store a binary version
   store_binary(dest_folder, W, H, binary_name)
-
 end
+
+cmd = torch.CmdLine()
+cmd:text()
+cmd:text('Persian OCR preprocessing')
+cmd:text('Example:')
+cmd:text('$> th convert.images.lua --batchSize 128 --momentum 0.5')
+cmd:text('Options:')
+cmd:option('--src', './PDB-Test' , 'source folder to read images from')
+cmd:option('--dest','./PDB-Test-PNG', 'destination folder to save png images to')
+cmd:option('--bin', 'PDB_Test.bin', 'name of the binary file to save')
+
+opt = cmd:parse(arg or {})
+
+run(opt.src, opt.dest, opt.bin)

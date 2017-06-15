@@ -11,6 +11,7 @@ cmd:text('Example:')
 cmd:text('$> th cnn.v2.lua --batchSize 128 --momentum 0.5')
 cmd:text('Options:')
 cmd:option('--learningRate', 0.1, 'learning rate at t=0')
+cmd:option('--id', 'unNamedExperiment', 'name of the experiment passed to dp. loges will be saved under this name')
 cmd:option('--lrDecay', 'linear', 'type of learning rate decay : adaptive | linear | schedule | none')
 cmd:option('--minLR', 0.00001, 'minimum learning rate')
 cmd:option('--saturateEpoch', 300, 'epoch at which linear decayed LR will reach minLR')
@@ -80,29 +81,7 @@ end
 print("Loading dataset...")
 ds = dofile 'cnn.v2.data.source.lua'
 
-print("Trainset...")
-print(#ds:get('train', 'input'))
-print(#ds:get('train', 'target'))
-
-t = ds:get('train', 'target')
-max = 3
-min = 3
-for i=1, 70645 do
-  if (t[i] > max ) then max = t[i] end
-  if (t[i] < min ) then min = t[i] end
-end
-
-print(max, min)
-
-print("Testset...")
-print(#ds:get('test', 'input'))
-print(#ds:get('test', 'target'))
-
-print("Validset...")
-print(#ds:get('valid', 'input'))
-print(#ds:get('valid', 'target'))
 --[[Model]]--
-
 cnn = nn.Sequential()
 
 -- convolutional and pooling layers
@@ -220,6 +199,7 @@ xp = dp.Experiment{
    model = cnn,
    optimizer = train,
    validator = ds:validSet() and valid,
+   id = dp.ObjectID.new(opt.id),
    tester = ds:testSet() and test,
    observer = {
       dp.FileLogger(),

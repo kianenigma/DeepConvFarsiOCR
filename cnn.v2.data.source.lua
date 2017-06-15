@@ -47,15 +47,10 @@ for i=1, 36 do
   classes[i] = i
 end
 
-print(classes)
-
-
 -- 1 params
 local validRatio = .5
 local train_bin = './PDB_Train.bin'
 local test_bin = './PDB_Test.bin'
-
-
 
 -- 2 load train data
 local train = torch.load(train_bin)
