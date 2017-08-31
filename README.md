@@ -1,5 +1,9 @@
 # DeepConvFarsiOCR
-A Deep Convolutional Approach Toward Farsi Character Recognition. Used for both machine printed and handwritten datasets
+A Deep Convolutional Approach Toward Farsi Character Recognition. Used for both machine printed and handwritten datasets.
+
+# Papers
+
+  - [From machine generated to handwritten character recognition; a deep learning approach](http://ieeexplore.ieee.org/document/7983055/)
 
 
 ## Usage
